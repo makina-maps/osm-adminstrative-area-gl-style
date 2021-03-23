@@ -1,0 +1,251 @@
+{
+  "version": 8,
+  "name": "Adminstrative Area",
+  "metadata": {
+    "openmaptiles:version": "3.x",
+    "maputnik:renderer": "mbgljs"
+  },
+  "center": [
+    0,
+    0
+  ],
+  "zoom": 1,
+  "bearing": 0,
+  "pitch": 0,
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": "mapbox://<YOUR TILESET'S MAP ID>"
+    }
+  },
+  "glyphs": "mapbox://fonts/undefined/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "rgba(255, 255, 247, 1)"
+      }
+    },
+    {
+      "id": "landcover-wood",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "landcover",
+      "filter": [
+        "==",
+        "class",
+        "wood"
+      ],
+      "paint": {
+        "fill-color": "rgba(213, 236, 201, 1)"
+      }
+    },
+    {
+      "id": "waterway-river",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "waterway",
+      "filter": [
+        "all",
+        [
+          "==",
+          "class",
+          "river"
+        ]
+      ],
+      "paint": {
+        "line-color": "rgba(150, 168, 218, 1)"
+      }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "paint": {
+        "fill-color": "rgba(187, 217, 234, 1)"
+      }
+    },
+    {
+      "id": "boundary_fill",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "boundary_polygon",
+      "filter": [
+        "all",
+        [
+          ">",
+          [
+            "get",
+            "admin_level"
+          ],
+          [
+            "step",
+            [
+              "zoom"
+            ],
+            0,
+            4,
+            2,
+            6,
+            4,
+            8,
+            6,
+            9,
+            7
+          ]
+        ],
+        [
+          "<=",
+          [
+            "get",
+            "admin_level"
+          ],
+          [
+            "step",
+            [
+              "zoom"
+            ],
+            3,
+            4,
+            4,
+            6,
+            6,
+            8,
+            7,
+            9,
+            8
+          ]
+        ]
+      ],
+      "paint": {
+        "fill-opacity": 0.3
+      }
+    },
+    {
+      "id": "boundary_border",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "boundary_polygon",
+      "filter": [
+        "all",
+        [
+          ">",
+          [
+            "get",
+            "admin_level"
+          ],
+          [
+            "step",
+            [
+              "zoom"
+            ],
+            0,
+            4,
+            2,
+            6,
+            4,
+            8,
+            6,
+            9,
+            7
+          ]
+        ],
+        [
+          "<=",
+          [
+            "get",
+            "admin_level"
+          ],
+          [
+            "step",
+            [
+              "zoom"
+            ],
+            3,
+            4,
+            4,
+            6,
+            6,
+            8,
+            7,
+            9,
+            8
+          ]
+        ]
+      ],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-width": [
+          "-",
+          9,
+          [
+            "get",
+            "admin_level"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "boundary_label",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "boundary_label",
+      "filter": [
+        "all",
+        [
+          "==",
+          [
+            "get",
+            "admin_level"
+          ],
+          [
+            "step",
+            [
+              "zoom"
+            ],
+            3,
+            4,
+            4,
+            6,
+            6,
+            8,
+            7,
+            9,
+            8
+          ]
+        ]
+      ],
+      "layout": {
+        "text-field": "{name}",
+        "text-font": [
+          "Noto Sans Regular"
+        ],
+        "text-max-width": 8,
+        "text-size": {
+          "base": 1.2,
+          "stops": [
+            [
+              7,
+              14
+            ],
+            [
+              11,
+              16
+            ]
+          ]
+        }
+      },
+      "paint": {
+        "text-color": "#333",
+        "text-halo-color": "rgba(255,255,255,0.8)",
+        "text-halo-width": 1.2
+      }
+    }
+  ],
+  "id": "adminstrative-area"
+}
